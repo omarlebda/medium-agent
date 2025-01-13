@@ -74,7 +74,7 @@ def ask_openai_assistant(query: str, recipient_id: str, messages: list[dict[str,
                 messages=messages
             )
             thread_for_db = {
-                'created_at': datetime.now().strftime('%d/%m/%Y, %H:%M'),
+                'created_at': datetime.now().isoformat(),
                 "thread_id": thread.id,
                 "recipient_id": recipient_id
             }

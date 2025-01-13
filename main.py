@@ -8,12 +8,9 @@ from functools import wraps
 
 from mongodb_api import create_page_token, create_user, get_user, update_messages
 from openai_api import ask_openai_assistant
-from fb_graph_api import send_message_to_fb_messenger
-from whatsapp_api import WhatsAppAPI
-from instagram_api import send_message_to_instagram
 import config
 from utils import format_messages
-
+from mongodb_api import create_thread, get_thread
 app = Flask(__name__)
 
 # Dictionary to store a queue for each user
@@ -21,10 +18,6 @@ user_queues = {}
 
 # Lock to synchronize access to user_queues
 user_queues_lock = Lock()
-
-# Initialize messaging APIs
-whatsapp = WhatsAppAPI()
-
 def async_route(f):
     @wraps(f)
     def wrapped(*args, **kwargs):
@@ -36,191 +29,48 @@ def handle_home():
     print("Home endpoint called")
     return "Server is running!", 200
 
-@app.route('/facebook', methods=['GET'])
-def facebook_verify():
-    mode = request.args.get('hub.mode')
-    token = request.args.get('hub.verify_token')
-    challenge = request.args.get('hub.challenge')
-    try:
-        if mode == 'subscribe' and token == config.VERIFY_TOKEN:
-            print('WEBHOOK_VERIFIED')
-            return challenge, 200
-        else:
-            return "BAD_REQUEST", 403
-    except:
-        return "BAD_REQUEST", 403
 
-@app.route('/instagram', methods=['GET'])
-def instagram_verify():
-    mode = request.args.get('hub.mode')
-    token = request.args.get('hub.verify_token')
-    challenge = request.args.get('hub.challenge')
-    try:
-        if mode == 'subscribe' and token == config.VERIFY_TOKEN:
-            print('INSTAGRAM_WEBHOOK_VERIFIED')
-            return challenge, 200
-        else:
-            return "BAD_REQUEST", 403
-    except:
-        return "BAD_REQUEST", 403
-
-@app.route('/instagram', methods=['POST'])
+@app.route('/chat', methods=['POST'])
 @async_route
-async def instagram_webhook():
+async def chat_api():
     try:
-        print('=== INSTAGRAM WEBHOOK REQUEST ===')
-        print('Headers:', request.headers)
-        body = request.get_json()
-        print('Raw webhook payload:', body)
+        data = request.get_json()
         
-        # Extract the message data
-        if 'entry' in body and len(body['entry']) > 0:
-            entry = body['entry'][0]
-            print('Entry:', entry)
+        if not data or 'message' not in data:
+            return {
+                'error': 'Missing required field: message'
+            }, 400
             
-            # Handle messaging format (new Instagram format)
-            if 'messaging' in entry:
-                messaging = entry['messaging'][0]
-                sender_id = messaging.get('sender', {}).get('id')
-                message = messaging.get('message', {})
-                message_text = message.get('text')
-                
-                if sender_id and message_text:
-                    print(f"Processing Instagram message from {sender_id}: {message_text}")
-                    try:
-                        
-                        # Process the message
-                        print("Calling OpenAI assistant...")
-                        await call_ask_openai_assistant_and_send_message(
-                            query=message_text,
-                            recipient_id=sender_id,
-                            platform="instagram"
-                        )
-                        print("Message processing initiated successfully")
-                    except Exception as e:
-                        print(f"Error in message processing: {str(e)}")
-                    return "OK", 200
-                else:
-                    print("Missing sender_id or message_text")
-            
-            # Handle changes format (old Instagram format)
-            elif 'changes' in entry:
-                change = entry['changes'][0]
-                if change.get('field') == 'messages':
-                    value = change.get('value', {})
-                    messages = value.get('messages', [])
-                    if messages:
-                        message = messages[0]
-                        from_id = message.get('from')
-                        message_text = message.get('text', {}).get('body')
-                        
-                        if from_id and message_text:
-                            print(f"Processing Instagram message from {from_id}: {message_text}")
-                            try:
-                                mark_message_as_seen(from_id)
-                                await call_ask_openai_assistant_and_send_message(
-                                    query=message_text,
-                                    recipient_id=from_id,
-                                    platform="instagram"
-                                )
-                            except Exception as e:
-                                print(f"Error in message processing: {str(e)}")
-                            return "OK", 200
-            else:
-                print("No recognized message format in entry")
-        else:
-            print("No valid entry found in webhook payload")
+        query = data['message']
+        recipient_id = data.get('recipient_id')
         
-        print("=== END INSTAGRAM WEBHOOK REQUEST ===")
-        return "OK", 200
-    except Exception as e:
-        print(f"Error processing Instagram webhook: {str(e)}")
-        return "ERROR", 500
+        # Generate a unique recipient_id if not provided
+        if not recipient_id:
+            from uuid import uuid4
+            recipient_id = str(uuid4())
 
-@app.route('/whatsapp', methods=['GET'])
-def whatsapp_verify():
-    mode = request.args.get('hub.mode')
-    token = request.args.get('hub.verify_token')
-    challenge = request.args.get('hub.challenge')
-    try:
-        if mode == 'subscribe' and token == config.VERIFY_TOKEN:
-            print('WHATSAPP_WEBHOOK_VERIFIED')
-            return challenge, 200
-        else:
-            return "BAD_REQUEST", 403
-    except:
-        return "BAD_REQUEST", 403
-
-@app.route('/whatsapp', methods=['POST'])
-@async_route
-async def whatsapp_webhook():
-    try:
-        print('A new WhatsApp message request...')
-        body = request.get_json()
+        # Process the message and get response
+        response = await call_ask_openai_assistant_and_send_message(
+            query=query,
+            recipient_id=recipient_id,
+            platform="api"
+        )
         
-        # Extract the message data
-        if 'entry' in body and len(body['entry']) > 0:
-            entry = body['entry'][0]
-            if 'changes' in entry and len(entry['changes']) > 0:
-                change = entry['changes'][0]
-                if change.get('value', {}).get('messages'):
-                    message = change['value']['messages'][0]
-                    
-                    # Extract message details
-                    message_id = message['id']
-                    recipient_phone = message['from']
-                    if 'text' in message and 'body' in message['text']:
-                        query = message['text']['body']                        
-                        # Process the message
-                        await call_ask_openai_assistant_and_send_message(
-                            query=query,
-                            recipient_id=recipient_phone,
-                            platform="whatsapp"
-                        )
-                        
-                        return "OK", 200
+        # Get thread info
+        thread = get_thread(recipient_id=recipient_id)
         
-        return "OK", 200
+        return {
+            'recipient_id': recipient_id,
+            'thread_id': thread['thread_id'] if thread else None,
+            'message': query,
+            'response': response
+        }, 200
+        
     except Exception as e:
-        print(f"Error processing WhatsApp webhook: {str(e)}")
-        return "ERROR", 500
-
-@app.route('/facebook', methods=['POST'])
-@async_route
-async def facebook_webhook():
-    try:
-        print('A new Facebook Messenger request...')
-        body = request.get_json()
-        
-        # Extract the message data
-        if 'entry' in body and len(body['entry']) > 0:
-            entry = body['entry'][0]
-            if 'messaging' in entry and len(entry['messaging']) > 0:
-                message_data = entry['messaging'][0]
-                
-                # Extract message details
-                recipient_id = message_data['sender']['id']
-                if 'message' in message_data and 'text' in message_data['message']:
-                    query = message_data['message']['text']
-                    
-                    print(query)
-                    print(recipient_id)
-                    print(entry.get('id'))
-                    
-                    # Process the message
-                    await call_ask_openai_assistant_and_send_message(
-                        query=query,
-                        recipient_id=recipient_id,
-                        platform="facebook",
-                        page_id=entry.get('id')
-                    )
-                    
-                    return "OK", 200
-        
-        return "OK", 200
-    except Exception as e:
-        print(f"Error processing Facebook webhook: {str(e)}")
-        return "ERROR", 500
+        print(f"Error in chat API: {str(e)}")
+        return {
+            'error': str(e)
+        }, 500
 
 async def call_ask_openai_assistant_and_send_message(query: str, recipient_id: str, platform: str, page_id: str = None):
     """Call OpenAI assistant and send the response message"""
@@ -304,6 +154,8 @@ async def call_ask_openai_assistant_and_send_message(query: str, recipient_id: s
                 whatsapp.send_message(recipient_id, response)
             elif platform == "instagram":
                 send_message_to_instagram(recipient_id, response)
+            elif platform == "api":
+                return response
             print(f"Message sent successfully via {platform}")
         except Exception as send_error:
             print(f"Error sending message via {platform}: {str(send_error)}")

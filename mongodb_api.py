@@ -46,8 +46,15 @@ def update_messages(recipient_id: str, query: str, response_text: str) -> bool:
     return True
 
 def create_user(user: dict) -> bool:
+    user['created_at'] = datetime.now().isoformat()
     response = supabase.table('users').insert(user).execute()
     return True
+
+def create_user_chat(user_data):
+    user_data['created_at'] = datetime.now().isoformat()
+    response = supabase.table('users').insert(user_data).execute()
+    return response.data
+
 
 def get_user(recipient_id: str) -> dict | None:
     response = supabase.table('users').select('*').eq('recipient_id', recipient_id).execute()
