@@ -3,7 +3,7 @@ import asyncio
 
 def send_message_to_instagram(recipient_id: str, message_text: str) -> None:
     try:
-        url = f"https://graph.instagram.com/v21.0/me/messages?access_token=IGAAVsYZBGFNcBBZAFBFVl9yam12LVdNLVVnYU1PMVJ2bU9oOEoxVUp4Q29hdGgxOEg3bTZA1X29SVHFOZA1puRVNVVnJLUTROQkZALa201UmxQdUoteWJKM3kxTjFrMVhTTWlyOVhqcC15a00tV2dIZAEhINTJxTzJadXRibE54NVNtTQZDZD"
+        url = f"https://graph.instagram.com/v21.0/me/messages?access_token=IGAAVsYZBGFNcBBZAFBnbVBoeWlQOUdZAd3ZAmVi05WDNDU0dWRE40a1dSRENzaFB0ZAFNGNTNNZAnFqTlZAkcWp1ZAWpaUXBsYURjbVNtRG9iQTZAReHdGMXYycG1BVG5sS2RKd0NlWTNCa0hSeEc0TXBfUTdPTUxoVG9pdVZA3YkVtcm4wYwZDZD"
         data = {
             "recipient": {"id": recipient_id},
             "message": {"text": message_text}

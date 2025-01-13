@@ -6,7 +6,7 @@ from openai import OpenAI, NotFoundError
 
 import config
 from mongodb_api import create_thread, get_thread
-from utils import save_orders, get_latest_order, update_order, delete_order
+from utils import save_request
 
 client = OpenAI(
     api_key=config.OPENAI_API_KEY
@@ -16,36 +16,37 @@ def handle_tool_call(tool_call):
     """Handle different tool calls based on function name"""
     function_name = tool_call.function.name
     params = json.loads(tool_call.function.arguments)
+    print(f"params: {params}")
     result = {"success": "false"}
     
     try:
-        if function_name == "save_orders":
-            success = save_orders(
-                params.get('order_details', ''),
-                params.get('client_address', ''),
-                params.get('client_phone', '')
-            )
-            result = {"success": str(success).lower()}
+        if function_name == "save_request":
+            # Extract all parameters individually
+            request_data = params.get("request_data", {})
+            # Extract individual fields from 'request_data'
+            name = request_data.get("name", "")
+            request_type = request_data.get("type", "")
+            sender_email = request_data.get("from", "")
+            reply = request_data.get("reply", "")
+            subject = request_data.get("subject", "")
+            act_as_type = request_data.get("actAsType", "")
+            message = request_data.get("message", "")
             
-        elif function_name == "get_latest_order":
-            order = get_latest_order(params.get('client_phone', ''))
-            result = {
-                "success": "true",
-                "order": order if order else None
+            # Create a structured request_data dictionary
+            request_data = {
+                "name": name,
+                "type": "2",
+                "from": sender_email,
+                "reply": reply,
+                "subject": subject,
+                "actAsType": "customer",
+                "message": message
             }
-            
-        elif function_name == "update_order":
-            success = update_order(
-                params.get('order_id', ''),
-                params.get('order_details', ''),
-                params.get('client_address', '')
-            )
+            print(f"Request data: {request_data}")
+            # Call the save_request function
+            success = save_request(request_data)
             result = {"success": str(success).lower()}
-            
-        elif function_name == "delete_order":
-            success = delete_order(params.get('order_id', ''))
-            result = {"success": str(success).lower()}
-            
+        
         print(f"Tool call {function_name} result: {result}")
         return result
         
