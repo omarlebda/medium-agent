@@ -5,54 +5,55 @@ import time
 from openai import OpenAI, NotFoundError
 
 import config
-from mongodb_api import create_thread, get_thread
-from utils import save_request
+from mongodb import create_thread, get_thread
+
 
 client = OpenAI(
     api_key=config.OPENAI_API_KEY
 )
 
-def handle_tool_call(tool_call):
-    """Handle different tool calls based on function name"""
-    function_name = tool_call.function.name
-    params = json.loads(tool_call.function.arguments)
-    print(f"params: {params}")
-    result = {"success": "false"}
+# def handle_tool_call(tool_call):
+#     """Handle different tool calls based on function name"""
+#     function_name = tool_call.function.name
+#     params = json.loads(tool_call.function.arguments)
+#     print(f"params: {params}")
+#     result = {"success": "false"}
     
-    try:
-        if function_name == "save_request":
-            # Extract all parameters individually
-            request_data = params.get("request_data", {})
-            # Extract individual fields from 'request_data'
-            name = request_data.get("name", "")
-            request_type = request_data.get("type", "")
-            sender_email = request_data.get("from", "")
-            reply = request_data.get("reply", "")
-            subject = request_data.get("subject", "")
-            act_as_type = request_data.get("actAsType", "")
-            message = request_data.get("message", "")
+#     try:
+#         if function_name == "save_request":
+#             # Extract all parameters individually
+#             request_data = params.get("request_data", {})
+#             # Extract individual fields from 'request_data'
+#             name = request_data.get("name", "")
+#             request_type = request_data.get("type", "")
+#             sender_email = request_data.get("from", "")
+#             reply = request_data.get("reply", "")
+#             subject = request_data.get("subject", "")
+#             act_as_type = request_data.get("actAsType", "")
+#             message = request_data.get("message", "")
             
-            # Create a structured request_data dictionary
-            request_data = {
-                "name": name,
-                "type": "2",
-                "from": sender_email,
-                "reply": reply,
-                "subject": subject,
-                "actAsType": "customer",
-                "message": message
-            }
-            print(f"Request data: {request_data}")
-            # Call the save_request function
-            success = save_request(request_data)
-            result = {"success": str(success).lower()}
+#             # Create a structured request_data dictionary
+#             request_data = {
+#                 "name": name,
+#                 "type": "2",
+#                 "from": sender_email,
+#                 "reply": reply,
+#                 "subject": subject,
+#                 "actAsType": "customer",
+#                 "message": message
+#             }
+#             print(f"Request data: {request_data}")
+#             # Call the save_request function
+#             success = save_request(request_data)
+#             result = {"success": str(success).lower()}
         
-        print(f"Tool call {function_name} result: {result}")
-        return result
+#         print(f"Tool call {function_name} result: {result}")
+#         return result
         
-    except Exception as e:
-        print(f"Error in {function_name}: {str(e)}")
-        return {"success": "false", "error": str(e)}
+#     except Exception as e:
+#         print(f"Error in {function_name}: {str(e)}")
+#         return {"success": "false", "error": str(e)}
+
 
 def ask_openai_assistant(query: str, recipient_id: str, messages: list[dict[str, str]]) -> str:
     try:
@@ -79,7 +80,6 @@ def ask_openai_assistant(query: str, recipient_id: str, messages: list[dict[str,
                 "recipient_id": recipient_id
             }
             create_thread(thread=thread_for_db)
-        print(f"Thread ID: {thread.id}")
         
         # Check for active runs
         active_run = None
@@ -128,14 +128,14 @@ def ask_openai_assistant(query: str, recipient_id: str, messages: list[dict[str,
                     print(f"Function: {tool_call.function.name}")
                     print(f"Arguments: {tool_call.function.arguments}")
                     
-                    # Handle the tool call
-                    result = handle_tool_call(tool_call)
+                    # # Handle the tool call
+                    # result = handle_tool_call(tool_call)
                     
-                    # Add the result to tool outputs
-                    tool_outputs.append({
-                        "tool_call_id": tool_call.id,
-                        "output": json.dumps(result)
-                    })
+                    # # Add the result to tool outputs
+                    # tool_outputs.append({
+                    #     "tool_call_id": tool_call.id,
+                    #     "output": json.dumps(result)
+                    # })
 
                 # Submit all tool outputs
                 if tool_outputs:

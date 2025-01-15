@@ -6,11 +6,11 @@ import queue
 from threading import Thread, Lock
 from functools import wraps
 
-from mongodb_api import create_page_token, create_user, get_user, update_messages
+from mongodb import create_page_token, create_user, get_user, update_messages
 from openai_api import ask_openai_assistant
 import config
 from utils import format_messages
-from mongodb_api import create_thread, get_thread
+from mongodb import create_thread, get_thread
 app = Flask(__name__)
 
 # Dictionary to store a queue for each user
@@ -71,6 +71,35 @@ async def chat_api():
         return {
             'error': str(e)
         }, 500
+
+
+
+@app.route('/chat-history/<recipient_id>', methods=['GET'])
+def get_chat_history(recipient_id):
+    try:
+        # Get user data using existing get_user function
+        print(recipient_id)
+        user = get_user(recipient_id=recipient_id)
+        
+        if not user:
+            return {
+                'error': 'User not found'
+            }, 404
+            
+        # Extract messages from user data
+        messages = user.get('messages', [])
+        
+        return {
+            'recipient_id': recipient_id,
+            'messages': messages
+        }, 200
+        
+    except Exception as e:
+        print(f"Error getting chat history: {str(e)}")
+        return {
+            'error': str(e)
+        }, 500
+
 
 async def call_ask_openai_assistant_and_send_message(query: str, recipient_id: str, platform: str, page_id: str = None):
     """Call OpenAI assistant and send the response message"""
