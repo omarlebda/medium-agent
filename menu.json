@@ -1,0 +1,184 @@
+{
+    "menu": [
+        {
+            "category_id": 1,
+            "category_name": "Add-ons",
+            "items": [
+                { "item_id": 101, "name": "Potatoes", "price": 30, "description": "", "ingredients": [], "spice_level": null },
+                { "item_id": 102, "name": "Garlic Sauce", "price": 10, "description": "", "ingredients": [], "spice_level": null },
+                { "item_id": 103, "name": "Spicy Garlic Sauce", "price": 10, "description": "", "ingredients": [], "spice_level": null },
+                { "item_id": 104, "name": "Muhammara", "price": 15, "description": "", "ingredients": [], "spice_level": null },
+                { "item_id": 105, "name": "Rice Plate", "price": 30, "description": "", "ingredients": [], "spice_level": null },
+                { "item_id": 106, "name": "Fried Kibbeh", "price": 7, "description": "", "ingredients": [], "spice_level": null },
+                { "item_id": 107, "name": "Pickles", "price": 7, "description": "", "ingredients": [], "spice_level": null },
+                { "item_id": 108, "name": "Coleslaw", "price": 10, "description": "", "ingredients": [], "spice_level": null },
+                { "item_id": 109, "name": "Cheddar Sauce", "price": 8, "description": "", "ingredients": [], "spice_level": null }
+            ]
+        },
+        {
+            "category_id": 2,
+            "category_name": "Maria Meals",
+            "items": [
+                { "item_id": 201, "name": "Maria Chicken Meal", "price": 125, "description": "Corn + Mushrooms + Mozzarella", "ingredients": [], "spice_level": null },
+                { "item_id": 202, "name": "Maria Meat Meal", "price": 135, "description": "Mushrooms + Mozzarella", "ingredients": [], "spice_level": null },
+                { "item_id": 203, "name": "Maria Mix Meal", "price": 130, "description": "Mushrooms + Mozzarella + Two Chicken and Meat Slices", "ingredients": [], "spice_level": null }
+            ]
+        },
+        {
+            "category_id": 3,
+            "category_name": "Shawarma Boxes",
+            "items": [
+                { "item_id": 301, "name": "Box of 14 Chicken Pieces", "price": 150, "description": "", "ingredients": [], "spice_level": null },
+                { "item_id": 302, "name": "Box of 14 Mixed Pieces", "price": 150, "description": "", "ingredients": [], "spice_level": null },
+                { "item_id": 303, "name": "Box of 14 Meat Pieces", "price": 140, "description": "", "ingredients": [], "spice_level": null },
+                { "item_id": 304, "name": "Box of 28 Chicken Pieces", "price": 300, "description": "", "ingredients": [], "spice_level": null },
+                { "item_id": 305, "name": "Box of 28 Mixed Pieces", "price": 300, "description": "", "ingredients": [], "spice_level": null },
+                { "item_id": 306, "name": "Box of 28 Meat Pieces", "price": 280, "description": "", "ingredients": [], "spice_level": null }
+            ]
+        },
+        {
+            "category_id": 4,
+            "category_name": "Machine Chicken",
+            "items": [
+                { "item_id": 401, "name": "Machine Chicken (Whole)", "price": 300, "description": "", "ingredients": [], "spice_level": null },
+                { "item_id": 402, "name": "Machine Chicken (Half)", "price": 165, "description": "", "ingredients": [], "spice_level": null },
+                { "item_id": 403, "name": "Machine Chicken (Quarter)", "price": 100, "description": "", "ingredients": [], "spice_level": null }
+            ]
+        },
+        {
+            "category_id": 5,
+            "category_name": "My Box",
+            "items": [
+                { "item_id": 501, "name": "My Zinger Box", "price": 250, "description": "", "ingredients": [], "spice_level": null },
+                { "item_id": 502, "name": "My Mixed Box", "price": 230, "description": "", "ingredients": [], "spice_level": null },
+                { "item_id": 503, "name": "Quarter Dozen My Zinger", "price": 130, "description": "", "ingredients": [], "spice_level": null }
+            ]
+        },
+        {
+            "category_id": 6,
+            "category_name": "Saad Boxes",
+            "items": [
+                { "item_id": 601, "name": "Saad Box", "price": 250, "description": "", "ingredients": [], "spice_level": null },
+                { "item_id": 602, "name": "Fantasy Box", "price": 230, "description": "", "ingredients": [], "spice_level": null },
+                { "item_id": 603, "name": "Everyone's Box", "price": 250, "description": "", "ingredients": [], "spice_level": null },
+                { "item_id": 604, "name": "Saad's Heart Box (Chicken)", "price": 115, "description": "", "ingredients": [], "spice_level": null },
+                { "item_id": 605, "name": "Saad's Heart Box (Meat)", "price": 125, "description": "", "ingredients": [], "spice_level": null },
+                { "item_id": 606, "name": "Mini Saad Box", "price": 130, "description": "", "ingredients": [], "spice_level": null }
+            ]
+        },
+        {
+            "category_id": 7,
+            "category_name": "Quarter Dozen Bites",
+            "items": [
+                { "item_id": 701, "name": "Quarter Dozen Bites (Chicken)", "price": 120, "description": "", "ingredients": [], "spice_level": null },
+                { "item_id": 702, "name": "Quarter Dozen Bites (Beef)", "price": 145, "description": "", "ingredients": [], "spice_level": null },
+                { "item_id": 703, "name": "Quarter Dozen Bites (Mix)", "price": 130, "description": "", "ingredients": [], "spice_level": null }
+            ]
+        },
+        {
+            "category_id": 8,
+            "category_name": "Half Dozen Bites",
+            "items": [
+                { "item_id": 801, "name": "Half Dozen Bites (Chicken)", "price": 220, "description": "", "ingredients": [], "spice_level": null },
+                { "item_id": 802, "name": "Half Dozen Bites (Beef)", "price": 270, "description": "", "ingredients": [], "spice_level": null },
+                { "item_id": 803, "name": "Half Dozen Bites (Mix)", "price": 250, "description": "", "ingredients": [], "spice_level": null }
+            ]
+        },
+        {
+            "category_id": 9,
+            "category_name": "Maria Box",
+            "items": [
+                { "item_id": 901, "name": "Maria Box (Chicken)", "price": 250, "description": "", "ingredients": [], "spice_level": null },
+                { "item_id": 902, "name": "Maria Box (Beef)", "price": 270, "description": "", "ingredients": [], "spice_level": null },
+                { "item_id": 903, "name": "Maria Box (Mix)", "price": 260, "description": "", "ingredients": [], "spice_level": null },
+                { "item_id": 904, "name": "Maria Box (Crispy)", "price": 260, "description": "", "ingredients": [], "spice_level": null }
+            ]
+        },
+        {
+            "category_id": 10,
+            "category_name": "Crepes",
+            "items": [
+                { "item_id": 1001, "name": "Ready Pane Crepe", "price": 65, "description": "", "ingredients": [], "spice_level": null },
+                { "item_id": 1002, "name": "Pane Crepe Saad El Sham", "price": 80, "description": "", "ingredients": [], "spice_level": null },
+                { "item_id": 1003, "name": "Crunchy Crepe", "price": 85, "description": "", "ingredients": [], "spice_level": null },
+                { "item_id": 1004, "name": "Super Crunchy Crepe", "price": 85, "description": "", "ingredients": [], "spice_level": null },
+                { "item_id": 1005, "name": "Cordon Bleu Crepe", "price": 85, "description": "", "ingredients": [], "spice_level": null }
+            ]
+        },
+        {
+            "category_id": 11,
+            "category_name": "Fatteh",
+            "items": [
+                { "item_id": 1101, "name": "Chicken Shawarma Fatteh", "price": 90, "description": "", "ingredients": [], "spice_level": null },
+                { "item_id": 1102, "name": "Beef Shawarma Fatteh", "price": 110, "description": "", "ingredients": [], "spice_level": null },
+                { "item_id": 1103, "name": "Mixed Shawarma Fatteh", "price": 100, "description": "", "ingredients": [], "spice_level": null },
+                { "item_id": 1104, "name": "Rizo Fatteh", "price": 95, "description": "", "ingredients": [], "spice_level": null }
+            ]
+        },
+        {
+            "category_id": 12,
+            "category_name": "Western Meals",
+            "items": [
+                { "item_id": 1201, "name": "Crispy Meal", "price": 120, "description": "", "ingredients": [], "spice_level": null },
+                { "item_id": 1202, "name": "Escalope Meal", "price": 120, "description": "", "ingredients": [], "spice_level": null },
+                { "item_id": 1203, "name": "Chicken Fajita Meal", "price": 120, "description": "", "ingredients": [], "spice_level": null },
+                { "item_id": 1204, "name": "Zinger Meal", "price": 120, "description": "", "ingredients": [], "spice_level": null },
+                { "item_id": 1205, "name": "Grilled Shish Meal", "price": 120, "description": "", "ingredients": [], "spice_level": null }
+            ]
+        },
+        {
+            "category_id": 13,
+            "category_name": "Shawarma Sandwiches",
+            "items": [
+                { "item_id": 1301, "name": "Large Chicken Shawarma", "price": 60, "description": "", "ingredients": [], "spice_level": null },
+                { "item_id": 1302, "name": "Large Beef Shawarma", "price": 80, "description": "", "ingredients": [], "spice_level": null },
+                { "item_id": 1303, "name": "Large Mixed Shawarma", "price": 70, "description": "", "ingredients": [], "spice_level": null },
+                { "item_id": 1304, "name": "Potatoes", "price": 30, "description": "", "ingredients": [], "spice_level": null },
+                { "item_id": 1305, "name": "Mozzarella Potatoes", "price": 35, "description": "", "ingredients": [], "spice_level": null }
+            ]
+        },
+        {
+            "category_id": 14,
+            "category_name": "Western Sandwiches",
+            "items": [
+                { "item_id": 1401, "name": "Shish Sandwich", "price": 70, "description": "", "ingredients": [], "spice_level": null },
+                { "item_id": 1402, "name": "Chicken Fajita Sandwich", "price": 70, "description": "", "ingredients": [], "spice_level": null },
+                { "item_id": 1403, "name": "Escalope Sandwich", "price": 70, "description": "", "ingredients": [], "spice_level": null },
+                { "item_id": 1404, "name": "Zinger Sandwich", "price": 70, "description": "", "ingredients": [], "spice_level": null }
+            ]
+        }
+    ],
+    "offers": [
+        { "offer_id": 1, "name": "3 Crepes Offer", "description": "Super Crunchy Crepe - Chicken Shawarma Crepe - Potato Crepe", "price": 200 },
+        { "offer_id": 2, "name": "Fantasy Box", "description": "7 Crispy Pieces - 7 Chicken Shawarma Pieces - 4 Maria Chicken Pieces - Potatoes - Garlic Sauce - Fried Bread", "price": 230 },
+        { "offer_id": 3, "name": "Saad Box", "description": "14 Chicken Shawarma Pieces - 14 Crispy Pieces - Potatoes - Fried Bread - Regular Garlic Sauce - Spicy Garlic Sauce", "price": 250 },
+        { "offer_id": 4, "name": "Everyone's Box", "description": "2 Mighty Zinger Sandwiches - 2 Chicken Shawarma Sandwiches - 2 Beef Burgers - Fries - Crunchy Bread - 2 Regular Garlic Sauces - 1 Spicy Garlic Sauce", "price": 250 },
+        { "offer_id": 5, "name": "Mighty Box", "description": "3 Mighty Zinger Sandwiches - 3 Chicken Shawarma Sandwiches - Potatoes - Garlic Sauce - Fried Bread", "price": 240 },
+        { "offer_id": 6, "name": "Saad's Heart", "description": "Mozzarella Cheese - Chicken Shawarma - Cheddar Cheese - Fries - Crunchy Bread - 2 Regular Garlic Sauces - 1 Spicy Garlic Sauce", "price": 125 },
+        { "offer_id": 7, "name": "The Agreed Offer", "description": "Chicken Fatteh - Arabic Chicken Meal - Fries - Crunchy Bread - 2 Regular Garlic Sauces - 1 Spicy Sauce", "price": 175 },
+        { "offer_id": 8, "name": "Crispy Agreed Offer", "description": "Rizo Fatteh - Arabic Chicken Meal - Fries - Crunchy Bread - 2 Regular Garlic Sauces - 1 Spicy Sauce", "price": 185 },
+        {
+            "offer_id": 9,
+            "name": "Half Dozen Shawarma",
+            "description": "6 Shawarma Sandwiches (Beef/Chicken/Mix) - Potatoes - Garlic Sauce - Fried Bread",
+            "price": { "Chicken": 230, "Beef": 270, "Mix": 250 }
+        },
+        { "offer_id": 10, "name": "Half Dozen Mighty", "description": "6 Mighty Zinger Sandwiches - Fries - Crunchy Bread - Regular and Spicy Garlic Sauces", "price": 250 },
+        {
+            "offer_id": 11,
+            "name": "8 Maria Pieces Offer",
+            "description": "8 Maria Pieces (Chicken/Beef/Crispy/Mix) - Fries - Crunchy Bread - 2 Regular Garlic Sauces - 1 Spicy Garlic Sauce",
+            "price": { "Chicken": 250, "Beef": 270, "Crispy": 260, "Mix": 260 }
+        },
+        {
+            "offer_id": 12,
+            "name": "The Full Feast",
+            "description": "Served with Rice, Garlic Sauce, Pickles, and Potatoes",
+            "details": [
+                { "type": "Shish", "contents": "Quarter Chicken + Shish Skewer", "price": 120 },
+                { "type": "Crispy", "contents": "Quarter Chicken + Crispy Piece", "price": 120 },
+                { "type": "Chicken Mix", "contents": "2 Crispy Pieces + Shish Skewer", "price": 120 }
+            ]
+        }
+    ]
+}
