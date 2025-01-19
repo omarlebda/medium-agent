@@ -1,0 +1,27 @@
+{
+    "name": "save_orders",
+    "description": "Save customer order details to the database.",
+    "strict": false,
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "order_details": {
+          "type": "string",
+          "description": "Details of the customer's order."
+        },
+        "client_address": {
+          "type": "string",
+          "description": "The customer's delivery address."
+        },
+        "client_phone": {
+          "type": "string",
+          "description": "The customer's phone number."
+        }
+      },
+      "required": [
+        "order_details",
+        "client_address",
+        "client_phone"
+      ]
+    }
+  }
